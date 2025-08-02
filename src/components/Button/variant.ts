@@ -36,7 +36,7 @@ export const buttonVariant = cva(
 				true: "opacity-50 cursor-not-allowed",
 			},
 			loading: {
-				true: "pointer-events-none text-transparent relative",
+				true: "pointer-events-none relative",
 				false: "",
 			},
 			iconPosition: {
@@ -48,32 +48,32 @@ export const buttonVariant = cva(
 			{
 				intent: "primary",
 				disabled: false,
-				className: "hover:bg-ui-primary/75",
+				className: "hover:brightness-85",
 			},
 			{
 				intent: "secondary",
 				disabled: false,
-				className: "hover:bg-ui-secondary/75",
+				className: "hover:brightness-85",
 			},
 			{
 				intent: "primary_outline",
 				disabled: false,
-				className: "hover:border-ui-primary/50 hover:text-ui-primary/50",
+				className: "hover:border-ui-primary/50",
 			},
 			{
 				intent: "secondary_outline",
 				disabled: false,
-				className: "hover:border-ui-secondary/50 hover:text-ui-secondary/50",
+				className: "hover:border-ui-secondary/50",
 			},
 			{
 				intent: "primary_borderless",
 				disabled: false,
-				className: "hover:text-ui-primary/50",
+				className: "hover:brightness-75",
 			},
 			{
 				intent: "secondary_borderless",
 				disabled: false,
-				className: "hover:text-ui-secondary/85",
+				className: "hover:brightness-75",
 			},
 		],
 		defaultVariants: {

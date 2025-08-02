@@ -6,3 +6,18 @@
 	--color-ui-white: #ffffff;
 	--color-ui-gray: #36363633;
 }
+
+.ripple {
+	position: absolute;
+	border-radius: 50%;
+	transform: scale(0);
+	animation: ripple-animation 600ms linear;
+	pointer-events: none;
+}
+
+@keyframes ripple-animation {
+	to {
+		transform: scale(2);
+		opacity: 0;
+	}
+}
