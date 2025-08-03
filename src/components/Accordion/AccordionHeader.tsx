@@ -58,7 +58,7 @@ export const AccordionHeader = <T,>({
 				</span>
 				<span
 					className={cn(
-						"min-w-8 min-h-8 text-ui-gray/45 transition delay-150 duration-300 ease-in-out rounded-full bg-ui-white shadow-[0_2px_6px_rgba(8,15,52,0.06)] flex items-center justify-center",
+						"min-w-8 min-h-8 text-ui-gray/45 transition duration-300 ease-in-out rounded-full bg-ui-white shadow-[0_2px_6px_rgba(8,15,52,0.06)] flex items-center justify-center",
 						isOpen && "rotate-90 bg-ui-primary text-ui-white",
 					)}
 				>

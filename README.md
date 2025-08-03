@@ -156,6 +156,8 @@ interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "dis
 You can customize the look and feel of the components using the className props. Override colors, spacing, or other utilities.
 
 
+
+
 ```css
 @theme {
 	--color-ui-primary: #0077b6;
@@ -177,6 +179,83 @@ You can customize the button further by passing your own Tailwind or custom CSS 
 
 
 ```
+
+
+```
+
+ 🧩 Accordion Component
+
+```
+
+A fully accessible, customizable, and keyboard-friendly Accordion component built with **React** and **Tailwind CSS**.
+
+---
+
+## 🚀 Features
+
+- ✅ Keyboard navigation (`ArrowUp`, `ArrowDown`, `Home`, `End`)
+- ✅ Accessible with `aria-*` attributes
+- ✅ Optional focus wrapping
+- ✅ Custom heading, content, and toggle icon renderers
+- ✅ Smooth animation with `max-height` + transition
+- ✅ Clean structure with `Accordion`, `AccordionPanel`, `AccordionHeader`, and `AccordionContent` components
+- ✅ Optional ARIA region roles for screen readers
+
+---
+## 📦 Usage
+
+
+
+```tsx
+
+1. Basic Example
+
+
+import { Accordion } from "@/coniungo/ui/Accordion";
+
+const items = [
+  { id: "one", title: "Section 1", content: "Lorem ipsum..." },
+  { id: "two", title: "Section 2", content: "Dolor sit amet..." },
+];
+
+<Accordion
+  items={items}
+  renderHeading={(item) => item.title}
+  renderContent={(item) => item.content}
+/>
+
+
+
+2. With Custom Toggle Icon
+
+
+
+<Accordion
+  items={items}
+  renderHeading={(item) => item.title}
+  renderContent={(item) => item.content}
+  renderToggleIcon={(isOpen) => (
+    <span className={`transition-transform ${isOpen ? "rotate-90" : ""}`}>
+      ➤
+    </span>
+  )}
+/>
+
+
+
+```
+
+| Prop                    | Type                          | Required  | Description                     |
+| ----------------------- | ----------------------------- | --------  | ------------------------------- |
+| `items`                 | `AccordionItem<T>[]`          | ✅        | Items to render                 |
+| `renderHeading`         | `(item, isOpen) => ReactNode` | ✅        | Render function for the header  |
+| `renderContent`         | `(item, isOpen) => ReactNode` | ✅        | Render function for the content |
+| `renderToggleIcon`      | `(isOpen) => ReactNode`       | ❌        | Custom toggle icon              |
+| `panelClassName`        | `string`                      | ❌        | Wrapper class for each panel    |
+| `panelHeadingClassName` | `string`                      | ❌        | Class for heading wrapper       |
+| `panelContentClassName` | `string`                      | ❌        | Class for content wrapper       |
+| `panelButtonClassName`  | `string`                      | ❌        | Class for toggle button         |
+| `idKey`                 | `keyof T`                     | ❌        | Custom ID key (default: `"id"`) |
 
 
 ```
