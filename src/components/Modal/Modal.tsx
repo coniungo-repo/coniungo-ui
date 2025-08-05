@@ -1,35 +1,38 @@
 import {
-	forwardRef,
-	useImperativeHandle,
 	useRef,
+	useImperativeHandle,
 	type ReactNode,
-	type ForwardedRef,
 	type MouseEvent,
 	type KeyboardEvent,
+	type RefObject,
 } from "react";
 import { useDialog } from "./hooks/useDialog";
 import { cn } from "@/lib/utils";
 import { Cancel } from "@/svg/Cancel";
+
+export type ModalHandle = {
+	toggle: () => void;
+};
 
 export type ModalProps = {
 	children: ReactNode;
 	className?: string;
 	showCloseIcon?: boolean;
 	closeIcon?: ReactNode;
+	modalRef: RefObject<ModalHandle | null>;
 };
 
-export type ModalHandle = {
-	toggle: () => void;
-};
-
-const Modal = forwardRef(function Modal(
-	{ children, className, showCloseIcon = true, closeIcon }: ModalProps,
-	ref: ForwardedRef<ModalHandle>,
-) {
+export const Modal = ({
+	children,
+	className,
+	showCloseIcon = true,
+	closeIcon,
+	modalRef,
+}: ModalProps) => {
 	const dialogRef = useRef<HTMLDialogElement | null>(null);
 	const { toggle } = useDialog({ dialogRef });
 
-	useImperativeHandle(ref, () => ({ toggle }), [toggle]);
+	useImperativeHandle(modalRef, () => ({ toggle }), [toggle]);
 
 	const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
 		if (event.currentTarget === event.target) toggle();
@@ -44,7 +47,7 @@ const Modal = forwardRef(function Modal(
 			ref={dialogRef}
 			onClick={handleBackdropClick}
 			onKeyDown={handleEscapeKey}
-			className=""
+			className={cn("")}
 		>
 			<div
 				className={cn(
@@ -52,24 +55,21 @@ const Modal = forwardRef(function Modal(
 					className,
 				)}
 			>
-				<div className="flex justify-end pb-4">
-					{showCloseIcon && (
+				{showCloseIcon && (
+					<div className="flex justify-end pb-4">
 						<button
 							type="button"
 							onClick={toggle}
-							className={cn(
-								"cursor-pointer p-1 rounded-full bg-white shadow-md hover:bg-ui-primary hover:text-white transition ease-in-out duration-300 flex items-center justify-center",
-							)}
+							className="cursor-pointer p-1 rounded-full bg-white shadow-md hover:bg-ui-primary hover:text-white transition ease-in-out duration-300 flex items-center justify-center"
 							aria-label="Close Modal"
 						>
 							{closeIcon ?? <Cancel />}
+							<span className="sr-only">Close Icon</span>
 						</button>
-					)}
-				</div>
+					</div>
+				)}
 				{children}
 			</div>
 		</dialog>
 	);
-});
-
-export { Modal };
+};

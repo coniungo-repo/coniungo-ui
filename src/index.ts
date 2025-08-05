@@ -1,7 +1,7 @@
 import "./tailwind/index.css";
 
-export { Button } from "src/components/Button";
+export { Button } from "@/components/Button";
 
-export { Accordion } from "src/components/Accordion";
+export { Accordion } from "@/components/Accordion";
 
-export { Modal } from "src/components/Modal";
+export { Modal } from "@/components/Modal";

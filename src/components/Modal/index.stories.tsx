@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "../Button";
-import { useRef } from "react";
+import { useRef, type ComponentProps } from "react";
 import { Modal, type ModalHandle } from ".";
 
 const meta: Meta<typeof Modal> = {
@@ -47,19 +47,18 @@ export default meta;
 
 type Story = StoryObj<typeof Modal>;
 
-const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
+const ModalWrapper = (args: Omit<ComponentProps<typeof Modal>, "modalRef">) => {
 	const modalRef = useRef<ModalHandle>(null);
 
 	return (
 		<>
 			<Button onClick={() => modalRef.current?.toggle()}>Open Modal</Button>
-			<Modal ref={modalRef} {...args}>
+			<Modal modalRef={modalRef} {...args}>
 				<p>Hello from modal!</p>
 			</Modal>
 		</>
 	);
 };
-
 export const Default: Story = {
 	args: {
 		showCloseIcon: true,

@@ -26,8 +26,8 @@ export const AccordionContent = <T,>({
 			style={style}
 			className={cn("transition-all duration-300", className)}
 		>
-			<div ref={contentRef} className="py-2">
-				<p className="font-normal text-ui-gray">
+			<div ref={contentRef}>
+				<p className="font-normal text-ui-gray pb-4 px-4">
 					{renderContent(item, isOpen)}
 				</p>
 			</div>

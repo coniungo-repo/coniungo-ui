@@ -36,7 +36,7 @@ export const AccordionPanel = <T,>({
 	return (
 		<div
 			className={cn(
-				"w-[100%] flex flex-col justify-between gap-[0.625rem] shadow-[0_2px_5px_rgba(8,15,52,0.12)] bg-ui-white rounded-[1.125rem] p-4",
+				"w-[100%] shadow-[0_2px_5px_rgba(8,15,52,0.12)] bg-ui-white overflow-hidden rounded-[1.125rem]",
 				isOpen && " border-ui-primary border-[2px]",
 
 				className,
