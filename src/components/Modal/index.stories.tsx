@@ -47,13 +47,13 @@ export default meta;
 
 type Story = StoryObj<typeof Modal>;
 
-const ModalWrapper = () => {
+const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
 	const modalRef = useRef<ModalHandle>(null);
 
 	return (
 		<>
 			<Button onClick={() => modalRef.current?.toggle()}>Open Modal</Button>
-			<Modal ref={modalRef} showCloseIcon={true}>
+			<Modal ref={modalRef} {...args}>
 				<p>Hello from modal!</p>
 			</Modal>
 		</>
@@ -61,8 +61,8 @@ const ModalWrapper = () => {
 };
 
 export const Default: Story = {
-	render: (args) => <ModalWrapper {...args} />,
 	args: {
 		showCloseIcon: true,
 	},
+	render: (args) => <ModalWrapper {...args} />,
 };

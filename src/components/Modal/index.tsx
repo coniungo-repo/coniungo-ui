@@ -52,20 +52,21 @@ const Modal = forwardRef(function Modal(
 					className,
 				)}
 			>
+				<div className="flex justify-end pb-4">
+					{showCloseIcon && (
+						<button
+							type="button"
+							onClick={toggle}
+							className={cn(
+								"cursor-pointer p-1 rounded-full bg-white shadow-md hover:bg-ui-primary hover:text-white transition ease-in-out duration-300 flex items-center justify-center",
+							)}
+							aria-label="Close Modal"
+						>
+							{closeIcon ?? <Cancel />}
+						</button>
+					)}
+				</div>
 				{children}
-
-				{showCloseIcon && (
-					<button
-						type="button"
-						onClick={toggle}
-						className={cn(
-							"cursor-pointer absolute top-2 right-2 p-1 rounded-full bg-white shadow-md hover:bg-ui-primary hover:text-white transition ease-in-out duration-300 flex items-center justify-center",
-						)}
-						aria-label="Close Modal"
-					>
-						{closeIcon ?? <Cancel />}
-					</button>
-				)}
 			</div>
 		</dialog>
 	);
