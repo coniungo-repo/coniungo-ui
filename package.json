@@ -1,7 +1,7 @@
 {
 	"name": "@coniungo/ui",
 	"private": false,
-	"version": "0.0.0",
+	"version": "1.1.0",
 	"license": "MIT",
 	"author": "Babatunde Y. Taiwo",
 	"description": "A customizable, accessible, and developer-friendly React UI component library powered by Tailwind CSS, TypeScript, and Vite",
