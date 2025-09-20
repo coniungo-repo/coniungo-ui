@@ -3,7 +3,7 @@
 	"private": false,
 	"version": "0.0.0",
 	"license": "MIT",
-	"author": "Babatunde Taiwo",
+	"author": "Babatunde Y. Taiwo",
 	"description": "A customizable, accessible, and developer-friendly React UI component library powered by Tailwind CSS, TypeScript, and Vite",
 	"repository": {
 		"type": "git",
