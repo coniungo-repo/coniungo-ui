@@ -16,43 +16,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repository
       - uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           registry-url: "https://registry.npmjs.org/"
 
-      # 3️⃣ Install pnpm
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # 4️⃣ Install dependencies
       - name: Install dependencies
         run: pnpm install
 
-      # 5️⃣ Build project
       - name: Build
         run: pnpm build
 
-      # 6️⃣ Run audit (optional)
       - name: Audit
         run: pnpm audit || true
 
-      # 7️⃣ Configure npm token
-      - name: Configure npm token
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - name: Release with semantic-release
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # 8️⃣ Verify npm login
-      - name: Verify npm authentication
-        run: npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      #
-
+        run: npx semantic-release
