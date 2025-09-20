@@ -39,229 +39,215 @@ npm install @coniungo/ui
 
 ## 🚀 Getting Started
 
-```tsx
-import { Button } from "@coniungo/ui";
 
-export default function Example() {
-  return <Button intent="primary">Click Me</Button>;
-}
-```
+# ✅ Button
 
-## 🧱 Components
+A fully customizable, accessible React button component with built-in **loading state**, **icon support**, and **ripple effect**. Designed for flexibility using **Class Variance Authority** for variants.
 
-```
-✅ Button
-```
+## Features
 
+- Supports **variants** like `intent`, `size`, and `radius`.
+- Built-in **loading state** with customizable loader.
+- Optional **start and end icons**.
+- Full-width support with `fullWidth` prop.
+- Ripple effect on click.
+- Compatible with standard HTML button attributes.
+- Works seamlessly in **client-side React** (`"use client"`).
 
+## Props
 
-The `Button` component is a flexible, theme-aware, utility-first button built using Tailwind CSS and [class-variance-authority (CVA)](https://cva.style/). 
-It supports multiple variants (`intent`), sizes, and boolean states like `disabled` and `fullWidth`. And `ripple` effect onClick animation
+| Prop         | Type                                     | Default     | Description                                                       |
+| ------------ | ---------------------------------------  | -------     | ----------------------------------------------------------------- |
+| `intent`     | `string` (variant)                       | —           | Sets the button style variant (primary, secondary, etc.).         |
+| `size`       | `string` (variant)                       | —           | Controls the button size.                                         |
+| `radius`     | `string` (variant)                       | —           | Controls the border radius.                                       |
+| `loading`    | `boolean`                                | `false`     | Shows loading state and disables the button.                      |
+| `loader`     | `ReactNode`                              | `<Loader />`| Custom loader component to display when `loading` is true.        |
+| `iconStart`  | `ReactNode`                              | —           | Optional icon displayed before the button text.                   |
+| `iconEnd`    | `ReactNode`                              | —           | Optional icon displayed after the button text.                    |
+| `fullWidth`  | `boolean`                                | `false`     | Makes the button span the full width of its container.            |
+| `disabled`   | `boolean`                                | `false`     | Disables the button.                                              |
 
----
+All other native `button` attributes (like `onClick`, `type`, etc.) are supported.
 
-
-
-
-## 🎨 Variants (`intent`)
-
-Supported button styles via the `intent` prop:
-
-- `primary`
-- `secondary`
-- `primary_outline`
-- `secondary_outline`
-- `primary_borderless`
-- `secondary_borderless`
-
----
-
-## 📏 Sizes (`size`)
-
-- `small` (`sm`)
-- `medium` (`md`) — default
-
----
-
-## 🔄 Radius (`radius`)
-
-Control button corner roundness with:
-
-- `none`
-- `sm`
-- `md`
-- `lg`
-- `xl`
-- `full`
-- `pill`
-- `fat`
-
----
-
-## ✅ Boolean Props
-
-- `disabled` — disables button interaction and applies dimmed styles.
-- `fullWidth` — makes button width 100% (default: `false`).
-- `loading` — shows a loading spinner and disables the button.
-
----
-
-## 🎉 Icons
-
-Use `iconStart` and `iconEnd` props to add icons before or after the button label.
+## Usage
 
 ```tsx
-<Button iconStart={<Icon />}>Save</Button>
-<Button iconEnd={<Icon />} intent="secondary">Next</Button>
+import { Button } from "@coniungo/ui/Button";
+import { Loader } from "@coniungo/ui/svg/Loader";
 
-```
-
----
-
-## 📦 Usage
-
-```tsx
-import { Button } from '@/coniungo/ui/Button';
-
-<Button>Default</Button>
-
-<Button intent="primary">Primary</Button>
-<Button intent="secondary_outline">Secondary Outline</Button>
-
-<Button intent="primary_borderless" size="small">Small Borderless</Button>
-
-<Button radius="pill" intent="secondary" iconStart={<SomeIcon />} iconEnd={<AnotherIcon />}>
-  With Icons
+<Button intent="primary" size="md" onClick={() => alert("Clicked!")}>
+  Click Me
 </Button>
 
-<Button loading loader={<CustomLoader />} />
-
-<Button disabled fullWidth>Disabled Full Width</Button>
-```
-
-## ⚙️ Props Interface
-```tsx
-interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "disabled">, VariantProps<typeof buttonVariant> {
-  loading?: boolean;
-  loader?: ReactNode;
-  iconStart?: ReactNode;
-  iconEnd?: ReactNode;
-}
-
-
-```
-
-## 🎨 Theming
-
-You can customize the look and feel of the components using the className props. Override colors, spacing, or other utilities.
-
-
-
-
-```css
-@theme {
-	--color-ui-primary: #0077b6;
-	--color-ui-secondary: #ff7a00;
-	--color-ui-white: #ffffff;
-	--color-ui-gray: #36363633;
-}
-
-```
-
-## 🛠️ Customization
-
-You can customize the button further by passing your own Tailwind or custom CSS classes via the className prop.
-
-```tsx
-<Button intent="primary" className="shadow-lg hover:scale-105 transition-transform">
-  Custom Styled Button
+<Button loading intent="secondary" loader={<Loader />}>
+  Loading...
 </Button>
 
-
+<Button iconStart={<Icon />} iconEnd={<Arrow />} fullWidth>
+  Button with Icons
+</Button>
 ```
 
 
-```
 
- 🧩 Accordion Component
+# 🪟 Modal
 
-```
+A fully controllable, accessible React modal component with **imperative API** using refs. Supports **custom close icons**, backdrop clicks, and keyboard escape handling. Built for client-side usage (`"use client"`).
 
-A fully accessible, customizable, and keyboard-friendly Accordion component built with **React** and **Tailwind CSS**.
+## Features
 
----
+- Imperative API via `ref` (`toggle`, `open`, `close`).
+- Optional close icon in the top-right corner.
+- Close modal on **backdrop click**.
+- Close modal on **Escape key** press.
+- Fully customizable via `className` prop.
+- Works with any ReactNode as children.
 
-## 🚀 Features
+## Props
 
-- ✅ Keyboard navigation (`ArrowUp`, `ArrowDown`, `Home`, `End`)
-- ✅ Accessible with `aria-*` attributes
-- ✅ Optional focus wrapping
-- ✅ Custom heading, content, and toggle icon renderers
-- ✅ Smooth animation with `max-height` + transition
-- ✅ Clean structure with `Accordion`, `AccordionPanel`, `AccordionHeader`, and `AccordionContent` components
-- ✅ Optional ARIA region roles for screen readers
+| Prop             | Type                      | Default      | Description                                    |
+| ---------------- | ------------------------- | -------      | ---------------------------------------------- |   
+| `children`       | `ReactNode`               | —            | The content to render inside the modal.        |
+| `className`      | `string`                  | —            | Additional classes for the modal container.    | 
+| `showCloseIcon`  | `boolean`                 | `true`       | Show the close button in the top-right corner. |
+| `closeIcon`      | `ReactNode`               | `<Cancel />` | Optional custom icon for the close button.     |
+| `modalRef`       | `RefObject<ModalHandle>`  | —            | Ref to control the modal imperatively.         |
+| `onBackdropClick`| `() => void`              | —            | Callback when the backdrop is clicked.         |
 
----
-## 📦 Usage
+## ModalHandle
 
-
+The `modalRef` exposes the following methods:
 
 ```tsx
+type ModalHandle = {
+  toggle: () => void;
+  open: () => void;
+  close: () => void;
+};
+```
+---
 
-1. Basic Example
+# 🧾 Accordion Component
 
+The `Accordion` component is a flexible and generic expandable/collapsible UI element that accepts any data type and renders titles and content based on user-provided render functions.
 
-import { Accordion } from "@/coniungo/ui/Accordion";
+### 🎯 Features
 
-const items = [
-  { id: "one", title: "Section 1", content: "Lorem ipsum..." },
-  { id: "two", title: "Section 2", content: "Dolor sit amet..." },
+- Fully generic TypeScript support for any data structure
+- Controlled open/close state with smooth animations
+- Accessible with proper ARIA attributes and keyboard interaction
+- Customizable styling via `className` prop
+
+### 📦 Usage
+
+```tsx
+import { Accordion } from "@coniungo/ui";
+
+const accordionData = [
+  {
+    title: "What is your return policy?",
+    content:
+      "You can return any item within 30 days of purchase as long as it’s in its original condition.",
+  },
+  // more items...
 ];
 
-<Accordion
-  items={items}
-  renderHeading={(item) => item.title}
-  renderContent={(item) => item.content}
-/>
-
-
-
-2. With Custom Toggle Icon
-
-
-
-<Accordion
-  items={items}
-  renderHeading={(item) => item.title}
-  renderContent={(item) => item.content}
-  renderToggleIcon={(isOpen) => (
-    <span className={`transition-transform ${isOpen ? "rotate-90" : ""}`}>
-      ➤
-    </span>
-  )}
-/>
-
-
-
+export default function Example() {
+  return (
+    <Accordion
+      data={accordionData}
+      renderTitle={(item) => item.title}
+      renderContent={(item) => item.content}
+      className="my-accordion"
+    />
+  );
+}
 ```
 
-| Prop                    | Type                          | Required  | Description                     |
-| ----------------------- | ----------------------------- | --------  | ------------------------------- |
-| `items`                 | `AccordionItem<T>[]`          | ✅        | Items to render                 |
-| `renderHeading`         | `(item, isOpen) => ReactNode` | ✅        | Render function for the header  |
-| `renderContent`         | `(item, isOpen) => ReactNode` | ✅        | Render function for the content |
-| `renderToggleIcon`      | `(isOpen) => ReactNode`       | ❌        | Custom toggle icon              |
-| `panelClassName`        | `string`                      | ❌        | Wrapper class for each panel    |
-| `panelHeadingClassName` | `string`                      | ❌        | Class for heading wrapper       |
-| `panelContentClassName` | `string`                      | ❌        | Class for content wrapper       |
-| `panelButtonClassName`  | `string`                      | ❌        | Class for toggle button         |
-| `idKey`                 | `keyof T`                     | ❌        | Custom ID key (default: `"id"`) |
+## Carousel
 
+A flexible and responsive React carousel component with **customizable navigation buttons** and smooth transition effects. Supports any ReactNode slides and automatic slide cloning for seamless infinite loops.
 
+## Props
+
+| Prop                  | Type             | Default | Description                                   |
+| --------------------- | ---------------- | ------- | --------------------------------------------- |
+| `children`            | `ReactNode[]`    | —       | An array of React nodes to display as slides. |
+| `className`           | `string`         | —       | Custom classes for the carousel wrapper.      |
+| `prevButton`          | `ReactNode`      | —       | Custom previous button element.               |
+| `nextButton`          | `ReactNode`      | —       | Custom next button element.                   |
+| `prevButtonClassName` | `string`         | —       | Additional classes for the previous button.   |
+| `nextButtonClassName` | `string`         | —       | Additional classes for the next button.       |
+| `transitionDuration`  | `number`         | `500`   | Slide transition duration in milliseconds.    |
+
+## Features
+
+- Smooth sliding transitions with configurable duration.
+- Supports custom **prev/next buttons** and styles.
+- Handles infinite loop seamlessly using slide cloning.
+- Fully responsive and works with any ReactNode children.
+
+## Usage
+
+# Accordion
+
+A fully customizable, generic React Accordion component. Supports custom headings, content, and toggle icons for each item. Keyboard navigation is built-in.
+
+## Props
+
+| Prop                       | Type                                                      | Default | Description                                                                         |
+| -------------------------- | --------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------- |
+| `items`                     | `AccordionItem<T>[]`                                     | —       | Array of accordion items. Each item can have an optional `id`.                      |
+| `renderHeading`             | `(item: AccordionItem<T>, isOpen: boolean) => ReactNode` | —       | Function to render the heading of each panel. Receives the item and its open state. |
+| `renderContent`             | `(item: AccordionItem<T>, isOpen: boolean) => ReactNode` | —       | Function to render the content of each panel. Receives the item and its open state. |
+| `renderToggleIcon`          | `(isOpen: boolean) => ReactNode`                         | —       | Optional function to render a custom toggle icon based on open state.               |
+| `panelClassName`            | `string`                                                 | —       | Additional classes for each accordion panel.                                        |
+| `panelHeadingClassName`     | `string`                                                 | —       | Additional classes for the heading section of each panel.                           |
+| `panelContentClassName`     | `string`                                                 | —       | Additional classes for the content section of each panel.                           |
+| `panelButtonClassName`      | `string`                                                 | —       | Additional classes for the toggle button in each panel.                             |
+| `idKey`                     | `keyof T \| string`                                      | `"id"`  | Key in the item object to use as a unique identifier.                               |
+
+## Usage Example
+
+```tsx
+import { Accordion, type AccordionItem } from "@coniungo/ui/Accordion";
+
+type FAQ = {
+  question: string;
+  answer: string;
+};
+
+const faqItems: AccordionItem<FAQ>[] = [
+  { id: "1", question: "What is your return policy?", answer: "You can return within 30 days." },
+  { id: "2", question: "Do you offer support?", answer: "Yes, 24/7 customer support." },
+];
+
+export default function FAQAccordion() {
+  return (
+    <Accordion
+      items={faqItems}
+      renderHeading={(item, isOpen) => (
+        <h3 className="font-semibold">{item.question} {isOpen ? "-" : "+"}</h3>
+      )}
+      renderContent={(item) => <p>{item.answer}</p>}
+      panelClassName="border-b border-gray-200"
+      panelHeadingClassName="p-4 cursor-pointer"
+      panelContentClassName="p-4 text-gray-600"
+    />
+  );
+}
 ```
-⚠️ This package requires Tailwind CSS v3.0.0 or later to be installed in your project.
 
-```
+
+
+## 🚧 Coming Soon
+
+We're actively working on expanding the Coniungo UI library with the following components:
+
+- 📊 **Table** — Fully customizable data tables with sorting, pagination, and responsive design.
+- 📚 **SideNav** — Sidebar navigation for complex layouts and dashboards.
+
 
 [![npm version](https://img.shields.io/npm/v/@coniungo/ui)](https://www.npmjs.com/package/@coniungo/ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
