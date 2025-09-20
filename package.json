@@ -31,7 +31,8 @@
 		"test": "vitest",
 		"coverage": "vitest run --coverage",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"semantic-release": "semantic-release"
 	},
 	"dependencies": {
 		"class-variance-authority": "^0.7.1",
