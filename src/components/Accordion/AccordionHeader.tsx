@@ -66,6 +66,7 @@ export const AccordionHeader = <T,>({
 						)}
 					>
 						<ArrowIcon direction="right" aria-hidden="true" />
+						<span className="sr-only">Toggle Icon</span>
 					</span>
 				)}
 			</button>

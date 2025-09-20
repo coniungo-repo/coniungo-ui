@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	useRef,
 	useImperativeHandle,
@@ -12,6 +14,8 @@ import { Cancel } from "@/svg/Cancel";
 
 export type ModalHandle = {
 	toggle: () => void;
+	open: () => void;
+	close: () => void;
 };
 
 export type ModalProps = {
@@ -20,6 +24,7 @@ export type ModalProps = {
 	showCloseIcon?: boolean;
 	closeIcon?: ReactNode;
 	modalRef: RefObject<ModalHandle | null>;
+	onBackdropClick?: () => void;
 };
 
 export const Modal = ({
@@ -28,18 +33,32 @@ export const Modal = ({
 	showCloseIcon = true,
 	closeIcon,
 	modalRef,
+	onBackdropClick,
 }: ModalProps) => {
 	const dialogRef = useRef<HTMLDialogElement | null>(null);
-	const { toggle } = useDialog({ dialogRef });
+	const { toggle, close, open } = useDialog({ dialogRef });
 
-	useImperativeHandle(modalRef, () => ({ toggle }), [toggle]);
+	useImperativeHandle(modalRef, () => ({ toggle, open, close }), [
+		toggle,
+		open,
+		close,
+	]);
+
+	const handleCloseModal = () => {
+		close();
+		if (onBackdropClick) onBackdropClick();
+	};
 
 	const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
-		if (event.currentTarget === event.target) toggle();
+		if (event.currentTarget === event.target) {
+			handleCloseModal();
+		}
 	};
 
 	const handleEscapeKey = (event: KeyboardEvent<HTMLDialogElement>) => {
-		if (event.key === "Escape") toggle();
+		if (event.key === "Escape") {
+			handleCloseModal();
+		}
 	};
 
 	return (
@@ -47,11 +66,11 @@ export const Modal = ({
 			ref={dialogRef}
 			onClick={handleBackdropClick}
 			onKeyDown={handleEscapeKey}
-			className={cn("")}
+			className="rounded-md p-0 bg-transparent"
 		>
 			<div
 				className={cn(
-					"relative max-w-[90vw] max-h-[90vh] p-4 rounded-[2.5rem] bg-white transition-all",
+					"relative rounded-md bg-white p-6 shadow-lg w-full max-w-md",
 					className,
 				)}
 			>
@@ -59,7 +78,7 @@ export const Modal = ({
 					<div className="flex justify-end pb-4">
 						<button
 							type="button"
-							onClick={toggle}
+							onClick={handleCloseModal}
 							className="cursor-pointer p-1 rounded-full bg-white shadow-md hover:bg-ui-primary hover:text-white transition ease-in-out duration-300 flex items-center justify-center"
 							aria-label="Close Modal"
 						>

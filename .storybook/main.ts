@@ -3,7 +3,7 @@ import path from "node:path";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const config: StorybookConfig = {
-	stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+	stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 	addons: [
 		"@chromatic-com/storybook",
 		"@storybook/addon-docs",
@@ -29,4 +29,3 @@ const config: StorybookConfig = {
 	},
 };
 export default config;
-

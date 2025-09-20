@@ -1,16 +1,18 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
 // https://vite.dev/config/
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
-
-import tsconfigPaths from "vite-tsconfig-paths";
-import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
-import dts from "vite-plugin-dts";
 import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { fileURLToPath } from "node:url";
+import dts from "vite-plugin-dts";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import path from "node:path";
+
+import { libInjectCss } from "vite-plugin-lib-inject-css";
+import preserveDirectives from "rollup-preserve-directives";
+
+// __dirname for ESM
 
 const dirname =
 	typeof __dirname !== "undefined"
@@ -24,14 +26,37 @@ export default defineConfig({
 		tsconfigPaths(),
 		dts({
 			insertTypesEntry: true,
-			tsconfigPath: path.resolve(__dirname, "tsconfig.app.json"),
+			tsconfigPath: path.resolve(dirname, "tsconfig.app.json"),
 		}),
 		tailwindcss(),
-		cssInjectedByJsPlugin(),
+		preserveDirectives(),
+		{
+			...libInjectCss(),
+			enforce: "pre", // this is important to make sure the css is injected before the code is processed
+		},
+		{
+			// libInjectCss (with preserveDirectives) adds the css import to the top of the file
+			// this custom handle moves the directive ('use client') to the top of the file again
+			name: "custom-swap-directive",
+			generateBundle(_, bundle) {
+				for (const chunk of Object.values(bundle)) {
+					if (chunk.type === "chunk") {
+						if (chunk.code.includes("use client")) {
+							chunk.code = chunk.code.replace(/['"]use client['"];/, "");
+							chunk.code = `'use client';\n${chunk.code}`;
+						}
+						if (chunk.code.includes("use server")) {
+							chunk.code = chunk.code.replace(/['"]use server['"];/, "");
+							chunk.code = `'use server';\n${chunk.code}`;
+						}
+					}
+				}
+			},
+		},
 	],
 	build: {
 		lib: {
-			entry: path.resolve(__dirname, "src/index.ts"),
+			entry: path.resolve(dirname, "src/index.ts"),
 			name: "ConiungoUI",
 			fileName: "coniungo-ui",
 		},

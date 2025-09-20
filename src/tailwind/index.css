@@ -16,6 +16,16 @@
 	pointer-events: none;
 }
 
+dialog::backdrop {
+	@apply bg-black/50;
+}
+
+dialog[open] {
+	position: fixed;
+	inset: 0;
+	margin: auto;
+}
+
 @keyframes ripple-animation {
 	to {
 		transform: scale(2);

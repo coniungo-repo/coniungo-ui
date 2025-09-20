@@ -7,6 +7,7 @@ type UseDialogProps = {
 export function useDialog({ dialogRef }: UseDialogProps) {
 	const toggle = useCallback(() => {
 		const dialog = dialogRef.current;
+
 		if (!dialog) return;
 
 		if (dialog.hasAttribute("open")) {
@@ -16,5 +17,21 @@ export function useDialog({ dialogRef }: UseDialogProps) {
 		}
 	}, [dialogRef]);
 
-	return { toggle };
+	const open = useCallback(() => {
+		const dialog = dialogRef.current;
+		if (!dialog) return;
+		if (!dialog.hasAttribute("open")) {
+			dialog.showModal();
+		}
+	}, [dialogRef]);
+
+	const close = useCallback(() => {
+		const dialog = dialogRef.current;
+		if (!dialog) return;
+		if (dialog.hasAttribute("open")) {
+			dialog.close();
+		}
+	}, [dialogRef]);
+
+	return { toggle, open, close };
 }
