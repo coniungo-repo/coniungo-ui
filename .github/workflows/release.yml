@@ -16,55 +16,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
       - uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           registry-url: "https://registry.npmjs.org/"
 
-      # 3️⃣ Install pnpm
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # 4️⃣ Install dependencies
       - name: Install dependencies
         run: pnpm install
 
-      # 5️⃣ Build project
       - name: Build
         run: pnpm build
 
-      # 6️⃣ Audit (optional)
       - name: Audit
         run: pnpm audit || true
 
-      # 7️⃣ Configure npm token for publishing
-      - name: Configure npm token
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # 8️⃣ Verify npm authentication
-      - name: Verify npm login
-        run: npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # 9️⃣ Delete existing Git tags (to reset semantic-release)
-      - name: Delete all Git tags
-        run: |
-          git tag -l | xargs -n 1 git tag -d
-          git tag -l | xargs -n 1 git push origin --delete
-        shell: bash
-
-      # 🔟 Run semantic-release
       - name: Release with semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-
